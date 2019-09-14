@@ -1,9 +1,12 @@
 import React from 'react';
+import './infinity-scroll.css';
 
 class InfiniteScroll extends React.Component{
-state={
-    compoutedEle:[],
-}
+    state={
+        compoutedEle:[],
+        rootEle:React.createRef(),
+        elesize:0
+    }
 
     componentDidMount(){
         this.recycleDOM(0);
@@ -17,16 +20,14 @@ state={
 
     componentDidUpdate(){
         if(this.firstTime){
-            console.log(document.querySelector("#firstObeserverEle"))
             this.initIntersectionObserver();
+            this.setState({elesize:document.querySelector("#firstObeserverEle").getClientRects()[0].height});
         }
         this.firstTime=false;
     }
 
     initIntersectionObserver(){
-        const options = {
-            /* root: document.querySelector(".cat-list") */
-        }
+        const options = {}
     
         const callback = entries => {
             entries.forEach(entry => {
@@ -43,7 +44,7 @@ state={
     }
 
     render(){
-        return(<div id="listScrollRoot">
+        return(<div ref={this.state.rootEle} id="rootEle">
             {this.state.compoutedEle.map((item,index)=>this.setIdsInEle(item,index))}
         </div>);
     }
@@ -51,17 +52,16 @@ state={
     getNumFromStyle = numStr => Number(numStr.substring(0, numStr.length - 2));
     
     adjustPaddings = isScrollDown => {
-        const container = document.querySelector("#listScrollRoot");
-      const currentPaddingTop = this.getNumFromStyle(container.style.paddingTop);
-      const currentPaddingBottom = this.getNumFromStyle(container.style.paddingBottom);
-      const remPaddingsVal = 80 * ((this.props.size || 10) / 2);
+      const container = this.state.rootEle;
+      const currentPaddingTop = this.getNumFromStyle(container.current.style.paddingTop);
+      const currentPaddingBottom = this.getNumFromStyle(container.current.style.paddingBottom);
+      const remPaddingsVal =  (this.state.elesize - this.state.elesize/2.5)* ((this.props.size || 10) / 2);
         if (isScrollDown) {
-          container.style.paddingTop = currentPaddingTop + remPaddingsVal + "px";
-        container.style.paddingBottom = currentPaddingBottom === 0 ? "0px" : currentPaddingBottom - remPaddingsVal + "px";
+          container.current.style.paddingTop = currentPaddingTop + remPaddingsVal + "px";
+          container.current.style.paddingBottom = currentPaddingBottom === 0 ? "0px" : currentPaddingBottom - remPaddingsVal + "px";
       } else {
-          container.style.paddingBottom = currentPaddingBottom + remPaddingsVal + "px";
-        container.style.paddingTop = currentPaddingTop === 0 ? "0px" : currentPaddingTop - remPaddingsVal + "px";
-        
+        container.current.style.paddingBottom = currentPaddingBottom + remPaddingsVal + "px";
+        container.current.style.paddingTop = currentPaddingTop === 0 ? "0px" : currentPaddingTop - remPaddingsVal + "px";
       }
     }
     
@@ -86,10 +86,8 @@ state={
         const firstIndex = this.getSlidingWindow(false);
         this.adjustPaddings(false);
         this.recycleDOM(firstIndex);
-        //this.setState({currentIndex:firstIndex});
         currentIndex = firstIndex;
       }
-     // this.setState({topSentinelPreviousY:currentY,topSentinelPreviousRatio:currentRatio});
         topSentinelPreviousY = currentY;
         topSentinelPreviousRatio = currentRatio;
     }
@@ -128,11 +126,8 @@ state={
         const firstIndex = this.getSlidingWindow(true);
         this.adjustPaddings(true);
         this.recycleDOM(firstIndex);
-        //this.setState({currentIndex:firstIndex});
         currentIndex=firstIndex;
       }
-    
-      //this.setState({bottomSentinelPreviousY:currentY,bottomSentinelPreviousRatio:currentRatio});
          bottomSentinelPreviousY = currentY;
          bottomSentinelPreviousRatio = currentRatio;
     }
