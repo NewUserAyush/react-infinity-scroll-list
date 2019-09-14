@@ -1,24 +1,44 @@
 {
   "name": "infinity-scroll-list-react",
   "version": "1.0.1",
-  "description": "",
-  "main": "infinite-scroll-component/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
-  },
+  "description": "A React scroll list component",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NewUserAyush/react-infinity-scroll-list.git"
   },
-  "author": "",
+  "author": "ayush <ayushjswl3@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/NewUserAyush/react-infinity-scroll-list/issues"
   },
-  "homepage": "https://github.com/NewUserAyush/react-infinity-scroll-list#readme"
+  "homepage": "https://github.com/NewUserAyush/react-infinity-scroll-list#readme",
+  "scripts": {
+    "test": "gulp",
+    "test-mocha": "mocha test",
+    "compile": "babel --presets es2015,stage-0,react -d ./ src/"
+  },
+  "keywords": [
+    "react-component",
+    "react-list",
+    "react.list",
+    "react.js"
+  ],
+  "dependencies": {
+    "react": "^0.14.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.0",
+    "gulp-react": "^3.1.0",
+    "jshint": "^2.9.1",
+    "mocha": "^2.4.5"
+  }
+
 }
+
