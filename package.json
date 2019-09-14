@@ -1,6 +1,6 @@
 {
   "name": "infinity-scroll-list-react",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A React scroll list component",
   "main": "build/index.js",
   "peerDependencies": {
@@ -24,6 +24,12 @@
     "start": "webpack --watch",
     "build": "webpack"
   },
+  "keyword":[
+    "infinity-scroll-list-react",
+    "infinity-scroll-react",
+    "react infinity scroll",
+    "infinity scroll list"
+  ],
   "dependencies": {
     "babel-preset-react": "^6.24.1",
     "react": "^16.8.0",
